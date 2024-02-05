@@ -155,6 +155,13 @@ class BaseWebViewState<S extends BaseWebView> extends State<S>
         onLoadStop: (controller, url) async {
           hideLoading();
         },
+        onProgressChanged: (controller, progress) {
+          if (progress > 1) {
+            showLoading();
+          } else if (progress > 99) {
+            hideLoading();
+          }
+        },
         onReceivedError: (controller, request, error) => hideLoading(),
       );
     }
@@ -238,13 +245,26 @@ class BaseWebViewState<S extends BaseWebView> extends State<S>
                   ),
                 ),
               ),
-              AnimatedPositioned(
-                left: 0,
-                right: 0,
-                bottom: 0,
-                height: ready && isLoading ? 4 : 0,
-                duration: const Duration(milliseconds: 200),
-                child: const LinearProgressIndicator(),
+              Positioned.fill(
+                child: Hero(
+                  tag: BaseConfiguration.firstLoadHeroTag,
+                  child: AnimatedSwitcher(
+                    duration: const Duration(milliseconds: 200),
+                    child: ready && isLoading
+                        ? const CircularProgressIndicator()
+                        : const SizedBox(),
+                  ),
+                ),
+              ),
+              Positioned(
+                top: MediaQuery.of(context).size.height * 0.01,
+                left: MediaQuery.of(context).size.width * 0.02,
+                child: IconButton(
+                  icon: const Icon(Icons.arrow_back_ios),
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                ),
               ),
             ],
           ),
