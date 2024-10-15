@@ -144,13 +144,15 @@ class BaseWebViewState<S extends BaseWebView> extends State<S>
         },
         onLoadStart: (controller, url) async {
           if (url == initialUri) {
+            showLoading();
             final certificate =
                 (await controller.getCertificate())?.x509Certificate;
             if (certificate != null && !onCertificateValidate(certificate)) {
               onError(const CertificateException('Invalid certificate'));
             }
+          }else{
+            hideLoading();
           }
-          showLoading();
         },
         onLoadStop: (controller, url) async {
           hideLoading();
