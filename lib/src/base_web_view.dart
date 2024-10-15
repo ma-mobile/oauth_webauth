@@ -144,7 +144,7 @@ class BaseWebViewState<S extends BaseWebView> extends State<S>
         },
         onLoadStart: (controller, url) async {
           if (url == initialUri) {
-            showLoading();
+            // showLoading();
             final certificate =
                 (await controller.getCertificate())?.x509Certificate;
             if (certificate != null && !onCertificateValidate(certificate)) {
@@ -159,7 +159,7 @@ class BaseWebViewState<S extends BaseWebView> extends State<S>
         },
         onProgressChanged: (controller, progress) {
           if (progress > 1) {
-            showLoading();
+            // showLoading();
           } else if (progress > 99) {
             hideLoading();
           }
@@ -384,7 +384,7 @@ class BaseWebViewState<S extends BaseWebView> extends State<S>
   }
 
   Future<void> controllerGo(String url) async {
-    showLoading();
+    // showLoading();
     inAppWebViewController?.loadUrl(
         urlRequest: URLRequest(url: WebUri(url), headers: {
       ...configuration.headers,
@@ -394,36 +394,36 @@ class BaseWebViewState<S extends BaseWebView> extends State<S>
   }
 
   Future<void> controllerGoBack() async {
-    showLoading();
+    // showLoading();
     inAppWebViewController?.goBack();
   }
 
   Future<void> controllerGoForward() async {
-    showLoading();
+    // showLoading();
     inAppWebViewController?.goForward();
   }
 
   Future<void> controllerReload() async {
-    showLoading();
+    // showLoading();
     inAppWebViewController?.reload();
   }
 
   Future<void> controllerClearCache() async {
-    showLoading();
+    // showLoading();
     await OAuthWebAuth.instance.clearCache();
     hideLoading();
     controllerReload();
   }
 
   Future<void> controllerClearCookies() async {
-    showLoading();
+    // showLoading();
     await OAuthWebAuth.instance.clearCookies();
     hideLoading();
     controllerReload();
   }
 
   Future<void> controllerClearAll() async {
-    showLoading();
+    // showLoading();
     await OAuthWebAuth.instance.clearAll();
     hideLoading();
     controllerReload();
