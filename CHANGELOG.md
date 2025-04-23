@@ -9,6 +9,11 @@ Types of changes
 - `Fixed` for any bug fixes.
 - `Security` in case of vulnerabilities.
 
+## 5.1.0
+### Added
+- `userAgent` can now be set in `OAuthConfiguration` and `BaseConfiguration`.  
+- `useHybridComposition` can now be set in `OAuthConfiguration` and `BaseConfiguration`.  
+
 ## 5.0.0+1
 ### Changed
 - `flutter_inappwebview` plugin updated to new breaking change ^6.0.0
