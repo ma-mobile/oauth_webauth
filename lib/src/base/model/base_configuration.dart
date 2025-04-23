@@ -65,6 +65,10 @@ class BaseConfiguration {
   /// Not available for Web
   final Locale? contentLocale;
 
+  /// The value set for this parameter will determine
+  /// the color of the back arrow across all screens
+  final Color? backButtonColor;
+
   final bool goBackBtnVisible;
   final bool goForwardBtnVisible;
   final bool refreshBtnVisible;
@@ -85,6 +89,7 @@ class BaseConfiguration {
     this.themeData,
     this.textLocales,
     this.contentLocale,
+    this.backButtonColor = Colors.black,
     bool? goBackBtnVisible,
     bool? goForwardBtnVisible,
     bool? refreshBtnVisible,
@@ -122,6 +127,7 @@ class BaseConfiguration {
     ThemeData? themeData,
     Map<String, String>? textLocales,
     Locale? contentLocale,
+    Color? backButtonColor,
     bool? goBackBtnVisible,
     bool? goForwardBtnVisible,
     bool? refreshBtnVisible,
@@ -143,6 +149,7 @@ class BaseConfiguration {
         themeData: themeData ?? this.themeData,
         textLocales: textLocales ?? this.textLocales,
         contentLocale: contentLocale ?? this.contentLocale,
+        backButtonColor: backButtonColor ?? this.backButtonColor,
         goBackBtnVisible: goBackBtnVisible ?? this.goBackBtnVisible,
         goForwardBtnVisible: goForwardBtnVisible ?? this.goForwardBtnVisible,
         refreshBtnVisible: refreshBtnVisible ?? this.refreshBtnVisible,

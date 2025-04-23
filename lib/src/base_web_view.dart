@@ -148,7 +148,7 @@ class BaseWebViewState<S extends BaseWebView> extends State<S>
             if (certificate != null && !onCertificateValidate(certificate)) {
               onError(const CertificateException('Invalid certificate'));
             }
-          }else{
+          } else {
             hideLoading();
           }
         },
@@ -260,7 +260,10 @@ class BaseWebViewState<S extends BaseWebView> extends State<S>
                 top: MediaQuery.of(context).size.height * 0.01,
                 left: MediaQuery.of(context).size.width * 0.02,
                 child: IconButton(
-                  icon: const Icon(Icons.arrow_back_ios),
+                  icon: Icon(
+                    Icons.arrow_back_ios,
+                    color: configuration.backButtonColor,
+                  ),
                   onPressed: () {
                     Navigator.pop(context);
                   },
