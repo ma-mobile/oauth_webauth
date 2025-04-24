@@ -69,6 +69,25 @@ class BaseConfiguration {
   /// the color of the back arrow across all screens
   final Color? backButtonColor;
 
+  /// The value set for this parameter will be used as the
+  /// back button widget across all screens in the application.
+  /// eg:-
+  //            ElevatedButton(
+  //             onPressed: () {
+  //               Navigator.of(context).pop();
+  //             },
+  //             style: ElevatedButton.styleFrom(
+  //               backgroundColor: Colors.white10,
+  //               shape: const CircleBorder(side: BorderSide(color: Colors.grey)),
+  //               padding: const EdgeInsets.all(16),
+  //             ),
+  //             child: const Icon(
+  //               Icons.arrow_back_ios_new,
+  //               color: Colors.white,
+  //             ),
+  //           )
+  final Widget? backButton;
+
   final bool goBackBtnVisible;
   final bool goForwardBtnVisible;
   final bool refreshBtnVisible;
@@ -90,11 +109,12 @@ class BaseConfiguration {
     this.textLocales,
     this.contentLocale,
     this.backButtonColor = Colors.black,
-    bool? goBackBtnVisible,
-    bool? goForwardBtnVisible,
-    bool? refreshBtnVisible,
-    bool? clearCacheBtnVisible,
-    bool? closeBtnVisible,
+    this.backButton,
+    bool? goBackBtnVisible = false,
+    bool? goForwardBtnVisible = false,
+    bool? refreshBtnVisible = false,
+    bool? clearCacheBtnVisible = false,
+    bool? closeBtnVisible = false,
   })  : headers = headers ?? const {},
         userAgent = userAgent ?? 'Mozilla/5.0',
         useHybridComposition = useHybridComposition ?? true,
@@ -128,6 +148,7 @@ class BaseConfiguration {
     Map<String, String>? textLocales,
     Locale? contentLocale,
     Color? backButtonColor,
+    Widget? backButton,
     bool? goBackBtnVisible,
     bool? goForwardBtnVisible,
     bool? refreshBtnVisible,
@@ -150,6 +171,7 @@ class BaseConfiguration {
         textLocales: textLocales ?? this.textLocales,
         contentLocale: contentLocale ?? this.contentLocale,
         backButtonColor: backButtonColor ?? this.backButtonColor,
+        backButton: backButton ?? this.backButton,
         goBackBtnVisible: goBackBtnVisible ?? this.goBackBtnVisible,
         goForwardBtnVisible: goForwardBtnVisible ?? this.goForwardBtnVisible,
         refreshBtnVisible: refreshBtnVisible ?? this.refreshBtnVisible,

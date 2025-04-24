@@ -117,7 +117,6 @@ class _AuthSampleScreenState extends State<AuthSampleScreen> {
           clientId: clientId,
           redirectUrl: redirectUrl,
           scopes: scopes,
-          backButtonColor: Colors.white,
           promptValues: const ['login'],
           loginHint: 'johndoe@mail.com',
           onCertificateValidate: (certificate) {
