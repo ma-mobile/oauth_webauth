@@ -485,36 +485,4 @@ class BaseWebViewState<S extends BaseWebView> extends State<S>
     urlStreamSubscription?.cancel();
     toolbarTimerShow.cancel();
   }
-
-  Future<void> showExitAlertDialog(BuildContext context) async {
-    Widget cancelButton = TextButton(
-      child: const Text('Cancel'),
-      onPressed: () {
-        Navigator.of(context).pop(false);
-      },
-    );
-    Widget continueButton = TextButton(
-      child: const Text('Close'),
-      onPressed: () {
-        Navigator.of(context); // closes dialog
-        Future.delayed(const Duration(milliseconds: 100), () {
-          Navigator.pop(context); // goes back one more screen
-        });
-      },
-    );
-    AlertDialog alert = AlertDialog(
-      title: const Text('Close Window'),
-      content: const Text('Are you sure you want to close this window?'),
-      actions: [
-        cancelButton,
-        continueButton,
-      ],
-    );
-    await showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return alert;
-      },
-    );
-  }
 }
