@@ -228,163 +228,157 @@ class BaseWebViewState<S extends BaseWebView> extends State<S>
         this.context = context;
         initTooltips();
         return SafeArea(
-          child: PopScope(
-            canPop: false,
-            onPopInvokedWithResult: (didPop, _) {
-              if (didPop) {
-                return;
-              }
-              showExitAlertDialog(context);
-            },
-            child: Scaffold(
-              body: Stack(
-                children: [
-                  webView,
-                  Positioned.fill(
-                    child: Hero(
-                      tag: BaseConfiguration.firstLoadHeroTag,
-                      child: AnimatedSwitcher(
-                        duration: const Duration(milliseconds: 200),
-                        child: !ready && isLoading
-                            ? const CircularProgressIndicator()
-                            : const SizedBox(),
-                      ),
+          child: Scaffold(
+            body: Stack(
+              children: [
+                CustomPopScope(
+                  canGoBack: onBackPressed,
+                  child: webView,
+                ),
+                Positioned.fill(
+                  child: Hero(
+                    tag: BaseConfiguration.firstLoadHeroTag,
+                    child: AnimatedSwitcher(
+                      duration: const Duration(milliseconds: 200),
+                      child: !ready && isLoading
+                          ? const CircularProgressIndicator()
+                          : const SizedBox(),
                     ),
                   ),
-                  Positioned.fill(
-                    child: Hero(
-                      tag: BaseConfiguration.firstLoadHeroTag,
-                      child: AnimatedSwitcher(
-                        duration: const Duration(milliseconds: 200),
-                        child: ready && isLoading
-                            ? const CircularProgressIndicator()
-                            : const SizedBox(),
-                      ),
+                ),
+                Positioned.fill(
+                  child: Hero(
+                    tag: BaseConfiguration.firstLoadHeroTag,
+                    child: AnimatedSwitcher(
+                      duration: const Duration(milliseconds: 200),
+                      child: ready && isLoading
+                          ? const CircularProgressIndicator()
+                          : const SizedBox(),
                     ),
                   ),
-                  Positioned(
-                    top: MediaQuery.of(context).size.height * 0.01,
-                    left: MediaQuery.of(context).size.width * 0.02,
-                    child: configuration.backButton ??
-                        IconButton(
-                          icon: Icon(
-                            Icons.arrow_back_ios,
-                            color: configuration.backButtonColor,
-                          ),
-                          onPressed: () {
-                            Navigator.pop(context);
-                          },
+                ),
+                Positioned(
+                  top: MediaQuery.of(context).size.height * 0.01,
+                  left: MediaQuery.of(context).size.width * 0.02,
+                  child: configuration.backButton ??
+                      IconButton(
+                        icon: Icon(
+                          Icons.arrow_back_ios,
+                          color: configuration.backButtonColor,
                         ),
-                  ),
-                ],
-              ),
-              bottomNavigationBar: AnimatedContainer(
-                duration: const Duration(milliseconds: 200),
-                height: toolbarVisible && showToolbar ? null : 0,
-                child: BottomAppBar(
-                  elevation: 8,
-                  child: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      if (configuration.goBackBtnVisible)
-                        iconButton(
-                          iconData: Icons.arrow_back_ios_rounded,
-                          tooltip: backButtonTooltip,
-                          onPressed:
-                              !allowGoBack ? null : () => controllerGoBack(),
-                        ),
-                      if (configuration.goForwardBtnVisible)
-                        iconButton(
-                          iconData: Icons.arrow_forward_ios_rounded,
-                          tooltip: forwardButtonTooltip,
-                          onPressed: !allowGoForward
-                              ? null
-                              : () => controllerGoForward(),
-                        ),
-                      if (configuration.refreshBtnVisible)
-                        iconButton(
-                          iconData: Icons.refresh_rounded,
-                          tooltip: reloadButtonTooltip,
-                          onPressed: () => controllerReload(),
-                        ),
-                      if (configuration.clearCacheBtnVisible)
-                        iconButton(
-                          iconData: Icons.cleaning_services_rounded,
-                          tooltip: clearCacheButtonTooltip,
-                          onPressed: () {
-                            clearCacheSwitch = clearCookiesSwitch = true;
-                            showDialog(
-                                context: context,
-                                builder: (context) => StatefulBuilder(
-                                    builder: (stateContext, setState) =>
-                                        AlertDialog(
-                                          title: Text(clearCacheButtonTooltip),
-                                          content: SingleChildScrollView(
-                                            child: Column(
-                                              mainAxisSize: MainAxisSize.min,
-                                              children: [
-                                                Text(clearCacheWarningMessage),
-                                                SwitchListTile(
-                                                    value: clearCacheSwitch,
-                                                    title: const Text('Cache'),
-                                                    onChanged: (value) =>
-                                                        setState(() =>
-                                                            clearCacheSwitch =
-                                                                value)),
-                                                SwitchListTile(
-                                                    value: clearCookiesSwitch,
-                                                    title:
-                                                        const Text('Cookies'),
-                                                    onChanged: (value) =>
-                                                        setState(() =>
-                                                            clearCookiesSwitch =
-                                                                value)),
-                                              ],
-                                            ),
+                        onPressed: () {
+                          Navigator.pop(context);
+                        },
+                      ),
+                ),
+              ],
+            ),
+            bottomNavigationBar: AnimatedContainer(
+              duration: const Duration(milliseconds: 200),
+              height: toolbarVisible && showToolbar ? null : 0,
+              child: BottomAppBar(
+                elevation: 8,
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    if (configuration.goBackBtnVisible)
+                      iconButton(
+                        iconData: Icons.arrow_back_ios_rounded,
+                        tooltip: backButtonTooltip,
+                        onPressed:
+                            !allowGoBack ? null : () => controllerGoBack(),
+                      ),
+                    if (configuration.goForwardBtnVisible)
+                      iconButton(
+                        iconData: Icons.arrow_forward_ios_rounded,
+                        tooltip: forwardButtonTooltip,
+                        onPressed: !allowGoForward
+                            ? null
+                            : () => controllerGoForward(),
+                      ),
+                    if (configuration.refreshBtnVisible)
+                      iconButton(
+                        iconData: Icons.refresh_rounded,
+                        tooltip: reloadButtonTooltip,
+                        onPressed: () => controllerReload(),
+                      ),
+                    if (configuration.clearCacheBtnVisible)
+                      iconButton(
+                        iconData: Icons.cleaning_services_rounded,
+                        tooltip: clearCacheButtonTooltip,
+                        onPressed: () {
+                          clearCacheSwitch = clearCookiesSwitch = true;
+                          showDialog(
+                              context: context,
+                              builder: (context) => StatefulBuilder(
+                                  builder: (stateContext, setState) =>
+                                      AlertDialog(
+                                        title: Text(clearCacheButtonTooltip),
+                                        content: SingleChildScrollView(
+                                          child: Column(
+                                            mainAxisSize: MainAxisSize.min,
+                                            children: [
+                                              Text(clearCacheWarningMessage),
+                                              SwitchListTile(
+                                                  value: clearCacheSwitch,
+                                                  title: const Text('Cache'),
+                                                  onChanged: (value) =>
+                                                      setState(() =>
+                                                          clearCacheSwitch =
+                                                              value)),
+                                              SwitchListTile(
+                                                  value: clearCookiesSwitch,
+                                                  title:
+                                                      const Text('Cookies'),
+                                                  onChanged: (value) =>
+                                                      setState(() =>
+                                                          clearCookiesSwitch =
+                                                              value)),
+                                            ],
                                           ),
-                                          actions: [
-                                            TextButton(
-                                              onPressed: () =>
-                                                  Navigator.pop(context),
-                                              child: Text(
-                                                  MaterialLocalizations.of(
-                                                          context)
-                                                      .cancelButtonLabel),
-                                            ),
-                                            TextButton(
-                                              onPressed: !clearCacheSwitch &&
-                                                      !clearCookiesSwitch
-                                                  ? null
-                                                  : () {
-                                                      Navigator.pop(context);
-                                                      if (clearCacheSwitch &&
-                                                          clearCookiesSwitch) {
-                                                        controllerClearAll();
-                                                      } else if (clearCacheSwitch) {
-                                                        controllerClearCache();
-                                                      } else {
-                                                        controllerClearCookies();
-                                                      }
-                                                    },
-                                              child: Text(
-                                                  MaterialLocalizations.of(
-                                                          context)
-                                                      .okButtonLabel),
-                                            ),
-                                          ],
-                                        )));
-                          },
-                        ),
-                      if (configuration.closeBtnVisible)
-                        iconButton(
-                          iconData: Icons.close,
-                          tooltip: closeButtonTooltip,
-                          respectLoading: false,
-                          onPressed: () => onCancel(),
-                        ),
-                    ],
-                  ),
+                                        ),
+                                        actions: [
+                                          TextButton(
+                                            onPressed: () =>
+                                                Navigator.pop(context),
+                                            child: Text(
+                                                MaterialLocalizations.of(
+                                                        context)
+                                                    .cancelButtonLabel),
+                                          ),
+                                          TextButton(
+                                            onPressed: !clearCacheSwitch &&
+                                                    !clearCookiesSwitch
+                                                ? null
+                                                : () {
+                                                    Navigator.pop(context);
+                                                    if (clearCacheSwitch &&
+                                                        clearCookiesSwitch) {
+                                                      controllerClearAll();
+                                                    } else if (clearCacheSwitch) {
+                                                      controllerClearCache();
+                                                    } else {
+                                                      controllerClearCookies();
+                                                    }
+                                                  },
+                                            child: Text(
+                                                MaterialLocalizations.of(
+                                                        context)
+                                                    .okButtonLabel),
+                                          ),
+                                        ],
+                                      )));
+                        },
+                      ),
+                    if (configuration.closeBtnVisible)
+                      iconButton(
+                        iconData: Icons.close,
+                        tooltip: closeButtonTooltip,
+                        respectLoading: false,
+                        onPressed: () => onCancel(),
+                      ),
+                  ],
                 ),
               ),
             ),

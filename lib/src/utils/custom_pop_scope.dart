@@ -17,7 +17,7 @@ class CustomPopScope<T> extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return PopScope(
-      canPop: false,
+      canPop: true,
       onPopInvokedWithResult: onPopInvokedWithResult ??
           (bool didPop, T? result) {
             if (didPop) return;
