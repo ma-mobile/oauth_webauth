@@ -3,29 +3,17 @@
 # separate terms of service, privacy policy, and support
 # documentation.
 
-name: Dart
+name: Build
 
 on:
   push:
-    branches: [ "master" ]
-  pull_request:
-    branches: [ "master" ]
+    branches:
+      - master
 
 jobs:
-  build:
-    runs-on: ubuntu-latest
+  test:
+    runs-on: macOS-latest
 
     steps:
-      - uses: actions/checkout@v4
-
-      # Note: This workflow uses the latest stable version of the Dart SDK.
-      # You can specify other versions if desired, see documentation here:
-      # https://github.com/dart-lang/setup-dart/blob/main/README.md
-      # - uses: dart-lang/setup-dart@v1
-      - uses: dart-lang/setup-dart@9a04e6d73cca37bd455e0608d7e5092f881fd603
-
-      - name: Clean dependencies
-        run: flutter clean
-       
-      - name: Install dependencies
-        run: flutter pub get
+      - run: flutter clean
+      - run: flutter pub get
